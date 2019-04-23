@@ -1,0 +1,54 @@
+type-validation?: true
+
+http:
+  ip: "0.0.0.0"
+  port: 3001
+
+kinesis:
+  streams:
+    example-stream-dev:
+      shards: 1
+      region: "us-west-1"
+      poll-interval-ms: 1000
+
+data-service:
+  info:
+    version: "0.1.0"
+    title: "Example Data API"
+    description: "Onyx Engine"
+
+  curator:
+    zk-address: "zookeeper-0.zookeeper.infras.svc.cluster.net:2181"
+    prefix: "/onyx-data-dev"
+
+  onyx:
+    n-peers: 24
+    peer-config:
+      onyx/tenancy-id: "onyx-dev-0"
+      zookeeper/address: "zookeeper-0.zookeeper.infras.svc.cluster.net:2181"
+      onyx.peer/job-scheduler: onyx.job-scheduler/greedy
+      onyx.peer/storage: :s3
+      onyx.peer/storage.s3.auth-type: :provider-chain
+      onyx.peer/storage.s3.bucket: "my-dev-files"
+      onyx.peer/storage.s3.region: "us-west-1"
+      onyx.peer/storage.s3.prefix: "onyx/"
+      onyx.peer/coordinator-barrier-period-ms: 60000
+
+  janitor:
+    gc-times-24h: ["12:00"]
+
+  jobs:
+    mandrill:
+      kinesis-stream: example-stream-dev
+      mandrill-api-key: "abcdefghijklmnop"
+      from-email: "support@example.com"
+      from-name: "Ed Zample"
+      messages:
+        password-recovery:
+          subject: "Password Recovery"
+          template: "forgotten-password"
+          link: "https://myapp.com/reset-password/%s/%s"
+        email-validation:
+          subject: "Email Validation"
+          template: "new-email-validation"
+          link: "https://myapp.com/confirm-email?user-id==%s&email=%s&code=%s"
