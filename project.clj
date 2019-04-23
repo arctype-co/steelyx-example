@@ -10,7 +10,7 @@
    [org.clojure/tools.logging "0.4.0"]
    [arctype/service "1.0.0"
     :exclusions [log4j]]
-   [arctype/steelyx "0.2.0-SNAPSHOT"
+   [arctype/steelyx "0.2.0"
     :exclusions [org.slf4j/slf4j-nop org.slf4j/slf4j-api org.slf4j/slf4j-log4j12]]
    [cheshire "5.8.0"]
    [http-kit "2.3.0"]

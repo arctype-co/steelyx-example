@@ -52,27 +52,6 @@
    :lifecycle/doc "Standard lifecycles including error handling"
    ::config job-config})
 
-(S/defn catalog-sqs-input
-  [sqs-config :- SQSConfig
-   queue-id :- S/Str]
-  (if-let [queue-config (get-in sqs-config [:queues (keyword queue-id)])]
-    {:onyx/name (keyword (str "sqs-input-" (name queue-id)))
-     :onyx/plugin :onyx.plugin.sqs-input/input
-     :onyx/type :input
-     :onyx/medium :sqs
-     :onyx/batch-size 10
-     :onyx/batch-timeout 1000
-     :onyx/n-peers 2
-     :sqs/queue-name (:name queue-config)
-     :sqs/region (:region queue-config)
-     :sqs/deserializer-fn ::deserialize-json
-     :sqs/attribute-names []
-     :sqs/message-attribute-names []
-     ; :sqs/max-batch 10
-     ; :sqs/max-inflight-receive-batches 10
-     :onyx/doc "Reads segments from an SQS queue"}
-    (throw (ex-info "Undefined SQS queue" {:queue-id queue-id}))))
-
 (S/defn catalog-kinesis-input
   [kinesis-config :- KinesisConfig
    stream-id :- S/Str]

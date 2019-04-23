@@ -22,7 +22,6 @@
    (S/optional-key :type-validation?) S/Bool
    :http http-kit/Config
    :data-service data-service/Config
-   :sqs SQSConfig
    :kinesis KinesisConfig})
 
 (def ^:private default-config {})
