@@ -4,7 +4,7 @@
     [clojure.tools.logging :as log]
     [arctype.service.protocol :refer [PLifecycle]]
     [arctype.service.io.http.http-kit :as http-kit]
-    [arctype.service.onyx :as data-service]
+    [steelyx :as steelyx]
     [cheshire.core :as json]
     [schema.core :as S]
     [sundbry.resource :as resource :refer [with-resources]]
@@ -21,7 +21,7 @@
   {:cli (S/maybe CliConfig)
    (S/optional-key :type-validation?) S/Bool
    :http http-kit/Config
-   :data-service data-service/Config
+   :steelyx steelyx/Config
    :kinesis KinesisConfig})
 
 (def ^:private default-config {})
@@ -29,8 +29,8 @@
 (defrecord MainService [config]
   PLifecycle
   (start [this]
-    (with-resources this [:data-service]
-      (data-service/set-job-context! data-service this))
+    (with-resources this [:steelyx]
+      (steelyx/set-job-context! steelyx this))
     (log/info {:message "Started example service"}) 
     this)
 
@@ -52,5 +52,5 @@
       (map->MainService
         {:config config})
       :system
-      [(http-kit/create :http-kit (:http config) :data-service)
-       (data-service/create :data-service (:data-service config) job-set)])))
+      [(http-kit/create :http-kit (:http config) :steelyx)
+       (steelyx/create :steelyx (:steelyx config) job-set)])))

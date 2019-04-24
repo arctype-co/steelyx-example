@@ -3,7 +3,6 @@
     [java.sql Timestamp])
   (:require
     [clojure.tools.logging :as log]
-    [arctype.service.onyx :as onyx]
     [byte-streams :as bs]
     [cheshire.core :as json]
     [schema.core :as S]

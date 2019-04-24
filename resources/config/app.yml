@@ -11,11 +11,7 @@ kinesis:
       region: "us-west-1"
       poll-interval-ms: 1000
 
-data-service:
-  info:
-    version: "0.1.0"
-    title: "Example Data API"
-    description: "Onyx Engine"
+steelyx:
 
   curator:
     zk-address: "zookeeper-0.zookeeper.infras.svc.cluster.net:2181"
