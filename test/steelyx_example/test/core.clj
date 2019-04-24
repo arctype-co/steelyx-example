@@ -1,4 +1,4 @@
-(ns clubzz.data.test.core
+(ns steelyx-example.test.core
   (:require
     [clojure.test :refer :all]
     [schema.core :as S]))
